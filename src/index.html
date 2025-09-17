@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blockchain E-Voting</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/truffle-contract@4.0.31/dist/truffle-contract.min.js"></script>
+  <script src="app.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #222;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #444;
+    }
+    input {
+      width: calc(100% - 20px);
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #account {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    #candidates {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Election DApp</h1>
+
+  <div class="container">
+
+    <div class="card">
+      <div id="account">Account: </div>
+      <h3>Candidate List</h3>
+      <div id="candidates"></div>
+    </div>
+
+    <div class="card">
+      <h3>Cast Your Vote</h3>
+      <input type="number" id="candidateId" placeholder="Enter Candidate ID to Vote" disabled>
+      <button id="voteBtn" onclick="castVote()" disabled>Vote</button>
+    </div>
+
+    <div class="card">
+      <h3>Add Candidate (Admin Only)</h3>
+      <input type="text" id="newCandidateName" placeholder="Candidate Name">
+      <button onclick="addCandidate()">Add Candidate</button>
+    </div>
+
+    <div class="card">
+      <h3>Voter Verification</h3>
+      <input type="file" id="passportFile" accept="image/*">
+      <button onclick="verifyPassport()">Upload & Verify</button>
+      <p id="verificationResult"></p>
+
+      <!-- ✅ Hardcoded valid passport numbers -->
+      <div id="validPassports" style="display:none;">
+        <span>Z43R34255</span>
+        <span>A1234567</span>
+        <span>B9876543</span>
+      </div>
+    </div>
+
+
+    <!-- web cam -->
+    <div class="card">
+      
+  <video id="webcam" autoplay playsinline width="300" height="200"></video><br>
+  <button onclick="startLivenessCheck()">Start Liveness Check</button>
+  <p id="livenessResult"></p>
+  <script src="liveness.js"></script>
+</div>
+
+
+  </div>
+
+  <script>
+    // Enable voting only if passport is verified
+    const verificationResult = document.getElementById('verificationResult');
+    const candidateInput = document.getElementById('candidateId');
+    const voteBtn = document.getElementById('voteBtn');
+
+    const observer = new MutationObserver(() => {
+      if (verificationResult.textContent.includes("✅ Passport Verified")) {
+        candidateInput.disabled = false;
+        voteBtn.disabled = false;
+      } else {
+        candidateInput.disabled = true;
+        voteBtn.disabled = true;
+      }
+    });
+
+    observer.observe(verificationResult, { childList: true, subtree: true, characterData: true });
+  </script>
+  <script src="liveness.js"></script>
+
+
+</body>
+</html>

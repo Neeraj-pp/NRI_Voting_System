@@ -1,0 +1,55 @@
+# Node.js / Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+.next/
+out/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Solidity / Hardhat / Truffle
+artifacts/
+cache/
+coverage/
+typechain/
+*.tsbuildinfo
+*.sol.js
+*.dbg.json
+
+# VSCode
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# NPM package locks
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Test / Coverage reports
+coverage/
+nyc_output/
+
+# Ganache / Ethereum clients
+*.db
+*.sqlite
+*.pid
+*.seed
+*.keystore
+
+# Optional: IDE / editor specific
+.idea/
+*.iml
